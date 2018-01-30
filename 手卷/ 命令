@@ -1,0 +1,5 @@
+ros版本 kinetic
+ctrl+h 显示隐藏文件
+ctrl+s 保存
+cat <.txt> 在终端打开文件  
+sudo apt-get install <软件> 下载安装软件

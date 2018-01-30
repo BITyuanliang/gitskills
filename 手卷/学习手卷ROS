@@ -1,0 +1,72 @@
+一、创建workspace
+1.mkdir -p ~/catkin_ws/src
+  cd ~/catkin_ws/src
+  catkin_init_workspace
+2.编译
+  cd ~/catkin_ws
+  catkin_make
+3.注册
+  source devel/setup.bash
+
+二、创建package
+  cd ~/catkin_ws/src
+  catkin_create_pkg beginner <依赖包>(std_msgs roscpp rospy)
+	[pcl_new/Points.h  pcl/point_cloud.h  pcl_conversions/pcl_conversions.h]
+  (cd ~/catkin_ws
+  catkin_make)
+三、发布、订阅 程序
+  beginner/src下创建talker.cpp和listener.cpp
+  写入代码
+  示例程序（talker/listener）
+  在Cmakelist.txt中添加
+    include_directories(include ${catkin_INCLUDE_DIRS})
+
+    add_executable(talker src/talker.cpp)
+    target_link_libraries(talker ${catkin_LIBRARIES})
+    add_dependencies(talker beginner_generate_messages_cpp)
+      
+    add_executable(listener src/listener.cpp)
+    target_link_libraries(listener ${catkin_LIBRARIES})
+    add_dependencies(listener beginner_generate_messages_cpp)
+
+  cd ~/catkin_ws
+  catkin_make
+  (显示Built target listener
+       Built target talker)
+
+四、启动
+ 终端1
+  cd ~/catkin_ws
+  roscore
+ 终端2
+  cd ~/catkin_ws
+  source devel/setup.bash
+  rosrun beginner talker
+ 终端3
+  cd ~/catkin_ws
+  source devel/setup.bash
+  rosrun beginner listener
+
+数据流
+ rqt_graph  数据流程
+ rostopic list 显示运行的话题
+ rostopic echo </话题名> 显示话题上数据流
+ rostopic pub </节点> std_msgs/String fu12
+
+ rosbag record -a 记录所有话题上数据
+ rosbag record -O <路径/记录文件名> </话题名>
+ rosbag play <记录文件名>
+
+ rospack find <包名称> 返回包的路径信息
+ roscd <包名称/子目录>
+ pwd 输出当前路径
+ rosls <包名称/子目录>
+ rosrun turtlesim turtlesim_node 小乌龟
+ rosrun turtlesim turtle_teleop_key 
+
+ rosnode list
+         info </节点名> 显示节点信息
+
+
+rosrun tf static_transform_publisher 0 0 0 0 0 0 1 map velodyne 10
+
